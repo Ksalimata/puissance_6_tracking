@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/addPointage', 'ApiController@addPointage');
+
+Route::post('/addMessage', 'ApiController@addMessage');
+
+Route::get('/time', 'ApiController@getTime');
