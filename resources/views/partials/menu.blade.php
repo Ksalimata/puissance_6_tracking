@@ -2,14 +2,14 @@
           <div class="left_col scroll-view">
 
             <div class="navbar nav_title" style="border: 0;">
-              <a href="{{Route('dashboard')}}" class="site_title"><i class="fa fa-map-marker"></i> <span>SMO Tracking</span></a>
+              <a href="{{Route('dashboard')}}" class="site_title"><i class="fa fa-map-marker"></i> <span>TELCO Tracking</span></a>
             </div>
 
             <div class="clearfix"></div>
 
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="{{asset('assets/images/LOGO_SMO.png')}}" alt="..." class="img-circle profile_img">
+                <img src="{{asset('assets/images/TELCO_LOGo.jpg')}}" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span><h2>Bienvenue,<br /> {{Auth::user()->username}}</h2></span>
@@ -21,8 +21,7 @@
 
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
-                <br/><br/>
+              <div class="menu_section">               
                 <h3>General</h3>
                 <ul class="nav side-menu">
                   <li><a href="{{route('dashboard')}}"><i class="fa fa-home"></i>Home</a>
@@ -56,6 +55,12 @@
                     <ul class="nav child_menu">
                       <li><a href="{{route('user.index')}}">Liste des utilisateurs</a></li>
                       <li><a href="{{route('user.create')}}">Ajouter un utilisateur</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-edit"></i> Rôles <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{route('role.index')}}">Liste des rôles</a></li>
+                      <li><a href="{{route('role.create')}}">Ajouter un rôle</a></li>
                     </ul>
                   </li>
                   <li><a href="{{route('carte')}}"><i class="fa fa-clone"></i>Supervision</a>

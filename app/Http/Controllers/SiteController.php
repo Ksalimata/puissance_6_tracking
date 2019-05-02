@@ -18,11 +18,18 @@ class SiteController extends Controller
      */
     public function index()
     {
-        $sites_clients = DB::table('sites')
+        try
+        {
+            $sites_clients = DB::table('sites')
                             ->join('clients','clients.id','client_id')
                             ->select('sites.*','clients.nom as nom_client')
                             ->get(); 
-        return view('front.site.index',compact('sites_clients'));
+        return view('front.site.index',compact('sites_clients'));   
+        }
+        catch(\Exception $e)
+        {
+            return view('front.site.index');
+        }
     }
 
     /**
@@ -51,6 +58,7 @@ class SiteController extends Controller
                 "nom"=>$request->nom,
                 "longitude"=>$request->longitude,
                 "latitude"=>$request->latitude,
+                "diametre"=>$request->diametre,
                 "client_id"=>$request->client_id
             ]);
 
@@ -122,5 +130,23 @@ class SiteController extends Controller
         {
             return redirect()->back()->with('error','Echec de la suppréssion, veuillez réessayer svp');
         }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyAll(Request $request)
+    {
+        $ids= explode(" ", $request->ids);
+        try{
+         Site::destroy($ids); 
+         return redirect()->back()->with('success','Sites supprimé avec succès');  
+        }
+        catch(\Exception $e){
+            return redirect()->back()->with('error','Echec de la suppréssion, veuillez réessayer svp');
+        }
+
     }
 }

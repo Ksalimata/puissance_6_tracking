@@ -8,6 +8,7 @@
                     <h2>Liste des utilisateurs</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <a href="{{route('user.create')}}"><h2><button class="btn-success btn-large"><i class="fa fa-plus"> Ajouter</i></button></h2></a>
+                      
                     </ul>
                     <div class="clearfix"></div>
                     @if(session('success'))
@@ -25,6 +26,7 @@
                     <table id="datatable-buttons" class="table table-striped table-bordered">
                       <thead>
                         <tr>
+                          
                           <th>Nom</th>
                           <th>Nom d'utilisateur</th>
                           <th>Role</th>
@@ -34,6 +36,7 @@
                      <tbody>
                       @foreach($users_roles as $user)
                         <tr>
+                          
                           <td>{{$user->name}}</td>
                           <td>{{$user->username}}</td>                      
                           <td>{{$user->nom_role}}</td> 
@@ -66,4 +69,45 @@
   }
   
 </script>
+<script type="text/javascript">
+
+ function checkAll (tableID, main)
+ {
+     mycheckbox = document.getElementsByName("mycheckbox");
+     if(main.checked==true)
+     {
+       for( var i=0;i<mycheckbox.length;i++)
+        mycheckbox[i].checked = true;
+     }
+     else
+     {
+        for( var i=0;i<mycheckbox.length;i++)
+          mycheckbox[i].checked = false;
+     }
+ }
+
+ function supprimer_toutes_les_lignes_selectionnees()
+ {
+
+    mycheckbox = document.getElementsByName("mycheckbox");
+
+    ids = "";
+
+    for(var i=0; i< mycheckbox.length;i++)
+    {
+      if(mycheckbox[i].checked==true)
+      {
+        if(i==0)
+        {
+          ids+=mycheckbox[i].value;
+        }
+        else
+          ids+=" "+mycheckbox[i].value;
+      }
+    }
+    
+    alert(ids);
+ }
+ 
+ </script>
 @endsection

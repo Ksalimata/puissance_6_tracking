@@ -8,9 +8,9 @@
 
         <div class="login-form">
             <div class="sign-in-htm">
-                <form method="POST" class="form-horizontal" action="{{ route('login') }}">
+                <form method="POST" class="form-horizontal" action="{{ route('login')}}">
                         {{ csrf_field() }}
-                        <div class="group{{ $errors->has('username') ? '           has-error' : '' }}">
+                        <div class="group{{ $errors->has('username') ? 'has-error' : '' }}">
                             <br/><br/>
                             <label for="username" class="label">Username</label>
                             <input id="username" type="text" class="input" name="username" value="{{ old('username') }}" required>

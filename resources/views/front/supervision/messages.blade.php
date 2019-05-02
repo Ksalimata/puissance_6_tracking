@@ -29,6 +29,7 @@
               </tr>
             </thead>
            <tbody>
+            @if(isset($listeMessages))
             @foreach($listeMessages as $message)
               <tr>
                 <td>{{$message->heure}}</td>
@@ -38,6 +39,7 @@
                 <td>{{$message->nom}} {{$message->prenom}}</td>
               </tr>
               @endforeach
+              @endif
             </tbody>
           </table>
         </div>

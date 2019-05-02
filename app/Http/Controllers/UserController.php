@@ -6,6 +6,7 @@ use App\User;
 use App\Role;
 use Illuminate\Http\Request;
 use DB;
+use Auth;
 
 class UserController extends Controller
 {
@@ -120,5 +121,28 @@ class UserController extends Controller
         {
             return redirect()->back()->with('error','Echec de la suppréssion, veuillez réessayer svp');
         }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\user  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function editPassword(Request $request)
+    {
+         try
+        {
+            $user = Auth::user();
+            $user->password = bcrypt($request->get('password'));
+            $user->save();
+            return redirect()->back()->with('success','Mot de passe modifié avec succès');
+        }
+        catch(\Exception $e)
+        {
+            return redirect()->back()->with('error','Echec de la mise à jour, veuillez réessayer svp');
+        }
+       
     }
 }

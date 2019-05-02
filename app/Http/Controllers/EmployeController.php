@@ -19,11 +19,20 @@ class EmployeController extends Controller
      */
     public function index()
     {
-        $employes_sites = DB::table('employes')
+        try 
+        {
+            $employes_sites = DB::table('employes')
                             ->join('sites','sites.id','site_id')
                             ->select('employes.*','sites.nom as nom_site')
                             ->get(); 
-        return view('front.employe.index',compact('employes_sites'));
+        return view('front.employe.index',compact('employes_sites'));          
+        }
+        
+        catch (\Exception $e) 
+        {
+            return view('front.employe.index');
+        }
+
     }
 
     /**
@@ -149,5 +158,24 @@ class EmployeController extends Controller
         {
             return redirect()->back()->with('error','Echec de la suppréssion, veuillez réessayer svp');
         }
+    }
+
+    
+    /**
+     * Remove the specified resource from storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyAll(Request $request)
+    {
+        $ids= explode(" ", $request->ids);
+        try{
+         Employe::destroy($ids); 
+         return redirect()->back()->with('success','Employe supprimé avec succès');  
+        }
+        catch(\Exception $e){
+            return redirect()->back()->with('error','Echec de la suppréssion, veuillez réessayer svp');
+        }
+
     }
 }

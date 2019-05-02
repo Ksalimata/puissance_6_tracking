@@ -61,6 +61,7 @@ class Kernel extends HttpKernel
         'dcom'=> 'App\Http\Middleware\DComMiddleware',
         'drh'=> 'App\Http\Middleware\DRHMiddleware',
         'spviseur'=> 'App\Http\Middleware\SpviseurMiddleware',
-        'dash'=> 'App\Http\Middleware\DashboardMiddleware'
+        'dash'=> 'App\Http\Middleware\DashboardMiddleware',
+        'cors' => 'App\Http\Middleware\CORS',
     ];
 }

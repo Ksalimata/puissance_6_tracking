@@ -36,6 +36,7 @@
               </tr>
             </thead>
            <tbody>
+            @if(isset($employes_sites))
             @foreach($employes_sites as $employe)
               <tr>
                 <td>{{$employe->nom}}</td>
@@ -51,6 +52,7 @@
                 
               </tr>
               @endforeach
+              @endif
             </tbody>
           </table>
         </div>

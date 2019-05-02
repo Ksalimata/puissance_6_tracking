@@ -66,7 +66,6 @@ class SupervisionController extends Controller
         }
 
         return $listecurrentpointages;
-        
     }
 
     public function listeCurrentPointages()

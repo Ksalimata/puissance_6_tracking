@@ -18,6 +18,7 @@ class CreateSitesTable extends Migration
             $table->string('nom');
             $table->double('longitude');
             $table->double('latitude');
+            $table->integer('diametre');
             $table->integer('client_id')->unsigned();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

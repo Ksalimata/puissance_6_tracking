@@ -15,7 +15,7 @@
             </div>
 
             <div class="clearfix"></div>
-            @if(session('success'))
+  @if(session('success'))
   <div class="alert alert-success">
     {{session('success')}} 
   </div>  
@@ -87,6 +87,20 @@
                             <option value="PP">Personne physique</option>
                             <option value="PM">Personne morale</option>
                           </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Username<span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="text" id="username" name="username" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Password <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                          <input type="password" id="password" name="password" required="required" class="form-control col-md-7 col-xs-12">
                         </div>
                       </div>
                       <div class="ln_solid"></div>

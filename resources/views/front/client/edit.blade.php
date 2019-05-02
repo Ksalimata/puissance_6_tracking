@@ -56,7 +56,7 @@
                   <div class="x_content">
                     <br />
                     <form id="edit-client" method="post" action="{{route('client.update', $client->id)}}" data-parsley-validate class="form-horizontal form-label-left">
-                      {{csrf_field()}}
+                       {{csrf_field()}}
                       <input type="hidden" name="_method" value="PUT">
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nom <span class="required">*</span>
@@ -100,6 +100,7 @@
                           </select>
                         </div>
                       </div>
+                      
                       <div class="ln_solid"></div>
                       <div class="form-group">
                         <div class="col-md-4 col-sm-4 col-xs-12 col-md-offset-3">

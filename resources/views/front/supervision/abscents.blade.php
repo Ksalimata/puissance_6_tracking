@@ -29,6 +29,7 @@
               </tr>
             </thead>
            <tbody>
+            @if(isset($listeEmployeNonPointes))
             @foreach($listeEmployeNonPointes as $employe)
               <tr>
                 <td>{{$employe->cni}}</td>
@@ -38,6 +39,7 @@
                 <td>{{$employe->nom_site}}</td> 
               </tr>
               @endforeach
+              @endif
             </tbody>
           </table>
         </div>

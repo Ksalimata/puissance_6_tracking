@@ -14,12 +14,19 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages_employes = DB::table('messages')
+        try{
+            $messages_employes = DB::table('messages')
                             ->join('employes','employes.id','employe_id')
                             ->select('messages.*','employes.nom','employes.prenom')
                             ->get(); 
         $nbre_messages = count($messages_employes);
         return view('front.message.index',compact('messages_employes','nbre_messages'));
+        }
+        catch(\Exception $e)
+        {
+            return view('front.message.index');
+        }
+        
     }
 
     /**

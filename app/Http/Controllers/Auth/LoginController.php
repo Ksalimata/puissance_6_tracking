@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
+use App\Client;
+use App\Site;
 
 class LoginController extends Controller
 {
@@ -46,6 +48,10 @@ class LoginController extends Controller
         
         if (Auth::attempt(['username' => request('username'), 'password' => request('password')])) {
             // Authentication passed...
+            if (Auth::user()->role_id==5) {
+                Auth::logout();
+                return redirect('/login')->with('erreur','Vous n\'êtes pas autorisé à accéder à cette application');
+            }
             return redirect()->intended('/');
             //dd(Auth::user()->username);
         }
@@ -57,5 +63,34 @@ class LoginController extends Controller
     {
         Auth::logout();
         return redirect('/login');
+    }
+
+    public function apilogin(Request $request)
+    {
+
+        //$this->validateLogin($request);
+
+        if (Auth::attempt(['username'=>$request->username, 'password'=>$request->password])) {
+            $user = $this->guard()->user();
+            $user->api_token = str_random(60);
+            $user->save();
+            
+            return response()->json([
+                "user" => $user->toArray()
+            ]);
+        }
+        return $this->sendFailedLoginResponse($request);
+    }
+
+    public function apilogout(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+
+        if ($user) {
+            $user->api_token = null;
+            $user->save();
+        }
+
+        return response()->json(['data' => 'User logged out.'], 200);
     }
 }

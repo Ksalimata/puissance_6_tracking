@@ -26,7 +26,8 @@ class updateSite extends FormRequest
         return [
             'nom'=>'string|max:40',
             'longitude'=>'numeric',
-            'latitude'=>'numeric'
+            'latitude'=>'numeric',
+            'diametre'=>'numeric'
         ];
     }
 }

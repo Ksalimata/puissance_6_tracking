@@ -19,11 +19,18 @@ class PointageController extends Controller
      */
     public function index()
     {
-        $pointages_employes = DB::table('pointages')
-                            ->join('employes','employes.id','employe_id')
-                            ->select('pointages.*','employes.nom','employes.prenom')
-                            ->get(); 
-        return view('front.pointage.index',compact('pointages_employes'));
+        try
+        {
+            $pointages_employes = DB::table('pointages')
+                                ->join('employes','employes.id','employe_id')
+                                ->select('pointages.*','employes.nom','employes.prenom')
+                                ->get(); 
+            return view('front.pointage.index',compact('pointages_employes'));
+        }
+        catch(\Exception $e)
+        {
+            return view('front.pointage.index');
+        }
     }
 
     /**
@@ -124,5 +131,23 @@ class PointageController extends Controller
         {
             return redirect()->back()->with('error','Echec de la suppréssion, veuillez réessayer svp');
         }
+    }
+
+     /**
+     * Remove the specified resource from storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyAll(Request $request)
+    {
+        $ids= explode(" ", $request->ids);
+        try{
+         Pointage::destroy($ids); 
+         return redirect()->back()->with('success','Pointages supprimé avec succès');  
+        }
+        catch(\Exception $e){
+            return redirect()->back()->with('error','Echec de la suppréssion, veuillez réessayer svp');
+        }
+
     }
 }

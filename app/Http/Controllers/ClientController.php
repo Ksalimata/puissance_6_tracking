@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\User;
+use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreRequests\storeClient;
 use App\Http\Requests\updateRequest\updateClient;
+
 class ClientController extends Controller
 {
     /**
@@ -15,9 +18,18 @@ class ClientController extends Controller
      */
     public function index()
     {
+        try
+        {
+
         $clients = Client::all();
         
         return view('front.client.index',compact('clients'));
+
+        }
+        catch(\Exception $e)
+        {
+           return view('front.client.index'); 
+        }
     }
 
     /**
@@ -38,22 +50,38 @@ class ClientController extends Controller
      */
     public function store(storeClient $request)
     {
+
+
+        DB::beginTransaction();
         try
         {
-            Client::create([
+            
+            $client = Client::create([
                 "nom"=>$request->nom,
                 "telephone"=>$request->telephone,
                 "adresse"=>$request->adresse,
                 "email"=>$request->email,
                 "type_client"=>$request->type_client
             ]);
-            return redirect()->back()->with('success','Client créé avec succès');
 
+            $user = User::create([
+                "name"=>$request->nom,
+                "username"=>$request->username,
+                "password"=>bcrypt($request->password),
+                "role_id"=>5,
+                "client_id"=>$client->id
+            ]);
+
+            
+
+            DB::commit();
+            
+            return redirect()->back()->with('success','Client créé avec succès');
         }
         catch(\Exception $e)
         {
+            DB::rollBack();
            return redirect()->back()->with('error',$e);
-
         }
     }
 
@@ -112,11 +140,30 @@ class ClientController extends Controller
     {
         if($client->delete())
         {
-            return redirect()->back()->with('success','Client supprimé avec succès');
+             return redirect()->back()->with('success','Client supprimé avec succès');
         }
         else
         {
             return redirect()->back()->with('error','Echec de la suppréssion, veuillez réessayer svp');
         }
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyAll(Request $request)
+    {
+        $ids= explode(" ", $request->ids);
+        try{
+         Client::destroy($ids); 
+         return redirect()->back()->with('success','Clients supprimé avec succès');  
+        }
+        catch(\Exception $e){
+            return redirect()->back()->with('error','Echec de la suppréssion, veuillez réessayer svp');
+        }
+
     }
 }

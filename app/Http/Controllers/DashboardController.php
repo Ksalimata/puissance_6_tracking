@@ -14,15 +14,22 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $employes_sites = DB::table('employes')
-                            ->join('sites','sites.id','site_id')
-                            ->join('pointages','employes.id','employe_id')
-                            ->where(DB::raw('MONTH(date_pointage)'),'=',date('m'))
-                            ->where(DB::raw('YEAR(date_pointage)'),'=',date('Y'))
-                            ->groupBy('employe_id')
-                            ->select('employes.*','sites.nom as nom_site',DB::raw('count(pointages.id) as nbre_pointage'))
-                            ->get(); 
-        return view('front.dashboard',compact('employes_sites'));
+        try
+        {
+            $employes_sites = DB::table('employes')
+                                ->join('sites','sites.id','site_id')
+                                ->join('pointages','employes.id','employe_id')
+                                ->where(DB::raw('MONTH(date_pointage)'),'=',date('m'))
+                                ->where(DB::raw('YEAR(date_pointage)'),'=',date('Y'))
+                                ->groupBy('employe_id')
+                                ->select('employes.*','sites.nom as nom_site',DB::raw('count(pointages.id) as nbre_pointage'))
+                                ->get(); 
+            return view('front.dashboard',compact('employes_sites'));
+        }
+        catch(\Exception $e)
+        {
+            return view('front.dashboard');
+        }
     }
 
     /**

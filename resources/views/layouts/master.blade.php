@@ -52,6 +52,49 @@
         
         @yield('content')
         @include('partials.footer')
+
+
+        <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Modifier mot de passe</h4>
+                </div>
+                <div class="modal-body">
+                    <center>
+                         <form action="{{route('editPassword')}}" method="POST" id="form" >
+                            {{ csrf_field() }}
+                            <div>                           
+                                <input placeholder="Nouveau mot de passe" type="password" id="password" name="password" required> 
+                                                                
+                            </div>
+                                    <br/>
+                                    <br/>
+                            <div>  
+                                <input placeholder="Confirmer le mot de passe" type="password" id="confirm_password" name="confirm_password" required>  
+                                     <strong id="erreur_password" style="color: red; display: block;"> </strong                         
+                            </div>
+
+                               
+                            <br/>
+                            <div>
+                                <button onclick="ConfirmPassword()"  type="button">Modifier</button>
+                            </div>
+                        </form>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
       </div>
     </div>  
 
@@ -129,4 +172,95 @@
     <script src="{{asset('assets/vendors/pdfmake/build/vfs_fonts.js')}}"></script>
     <!-- Custom Theme Scripts -->
     <script src="{{asset('assets/build/js/custom.min.js')}}"></script>
+
+     <script type="text/javascript">
+
+ function checkAll (tableID, main)
+ {
+     mycheckbox = document.getElementsByName("mycheckbox");
+     if(main.checked==true)
+     {
+       for( var i=0;i<mycheckbox.length;i++)
+        mycheckbox[i].checked = true;
+     }
+     else
+     {
+        for( var i=0;i<mycheckbox.length;i++)
+          mycheckbox[i].checked = false;
+     }
+ }
+
+ function supprimer_toutes_les_lignes_selectionnees()
+ {
+
+    mycheckbox = document.getElementsByName("mycheckbox");
+
+    ids = "";
+
+    for(var i=0; i< mycheckbox.length;i++)
+    {
+      if(mycheckbox[i].checked==true)
+
+      {
+        if(i==0)
+        {
+          ids+=mycheckbox[i].value;
+
+        }
+        else
+          ids+=" "+mycheckbox[i].value;
+
+      }
+    }
+     value_ids=document.getElementById("value_ids");
+     value_ids.value=ids;
+     
+     $('#frm_supression_multiple').submit();
+     
+ }
+ function confirm_delete()
+ {
+    var S = confirm("voulez-vous vraiment supprimer les éléments selectionner?");
+    if (S == true) 
+    {
+      supprimer_toutes_les_lignes_selectionnees() ;
+    }
+  }
+ </script>
+ <script type="text/javascript">
+    
+     function ConfirmPassword()
+     {
+        var password = document.getElementById("password").value;
+        var confirm_password = document.getElementById("confirm_password").value;
+        var erreur_password = document.getElementById("erreur_password");
+        var password = jQuery$('#password').val();
+
+        if ((password=="")||(confirm_password=="")) 
+        {
+            
+           // erreur_password.innerHTML="Aucun champs ne doit être vide, Veuillez saisir";
+            alert("desoler");
+            document.getElementById("form").reset();
+        }
+        else 
+        {
+            if(password == confirm_password)
+                        
+                {
+                    $("#form").submit();
+
+                }
+
+                else 
+                { 
+                    
+                   // erreur_password.innerHTML="Mot de passe non identique, Veuillez resaisir";
+
+                   document.getElementById("form").reset();
+                            
+                }
+        }
+     }
+ </script>
   </body>  

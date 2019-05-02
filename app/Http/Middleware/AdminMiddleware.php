@@ -25,6 +25,7 @@ class AdminMiddleware
             return redirect('carte');
         }
         
+        
         else
             return $next($request);
     }
